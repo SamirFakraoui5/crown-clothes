@@ -4,41 +4,62 @@ import { Route, Switch } from "react-router-dom";
 import ShopPage from "./pages/shop/shop.component.jsx";
 import Header from "./components/header/header.component.jsx";
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx";
-import { auth } from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 
 class App extends React.Component {
-  constructor(){
+  constructor() {
     super();
 
     this.state = {
-      currentUser:null
-    } 
+      currentUser: null,
+    };
   }
 
-  // function allow us to close 
+  // the base mane concept is to tell our app that
+  // we are getting auth by googel
+  // function allow us to close
   // the open object state comming from the fire base
   unsubscribeFromAuth = null;
-   componentDidMount(){
-     this.unsubscribeFromAuth= auth.onAuthStateChanged(user =>{
-        this.setState({currentUser:user});
-        console.log(user);
-      })
+  componentDidMount() {
+    // open subscription keep tracking the state of our user auth
+    // if any think change in our app the auth kibrary
+    // send the state object to the app to know if it signed in or
+    // signed out or anythink
+
+    // unsubscribeFromAuth this function allow us to
+    // close subscription to prevent memory lecks
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      // means that we get the user object from the auth
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot((snapShot) => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data(),
+            },
+          });
+        });
+      } else {
+        this.setState({
+          currentUser: userAuth,
+        });
+      }
+    });
   }
 
-  componentWillUnmount(){
-    // this allow us to close the subscirbtion each 
+  componentWillUnmount() {
+    // this allow us to close the subscirbtion each
     // time the component unMount from the dom
-    // unMount mean the app get closed 
+    // unMount mean the app get closed
     this.unsubscribeFromAuth();
   }
-
-
-
 
   render() {
     return (
       <div className="App">
-        <Header  currentUser ={this.state.currentUser}/>
+        <Header currentUser={this.state.currentUser} />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
