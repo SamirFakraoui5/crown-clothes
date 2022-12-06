@@ -5,7 +5,7 @@ import { auth } from "../../firebase/firebase.utils";
 import "./header.styles.scss";
 // allow use to pass state value using root-Reducer
 // which is the higher state of ower app
-import { connect, Connect } from "react-redux";
+import { connect } from "react-redux";
 
 const Header = ({ currentUser }) => (
   <div className="header">
@@ -18,7 +18,7 @@ const Header = ({ currentUser }) => (
       </Link>
       <Link className="option" to="/shop">
         CONTACT
-      </Link> 
+      </Link>
       {currentUser ? (
         <div className="option" onClick={() => auth.signOut()}>
           SIGN OUT
@@ -33,8 +33,8 @@ const Header = ({ currentUser }) => (
 // function allow us to take the currentUser state from
 // user reducer in rootReducer
 // state is the root-reducer wher we put ower all state
-const mapsStateToProps = state =>({
-  currentUser:state.user.currentUser
-})
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
 
-export default connect(mapsStateToProps)(Header);
+export default connect(mapStateToProps)(Header);
