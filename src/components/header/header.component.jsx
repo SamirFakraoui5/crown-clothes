@@ -1,13 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ReactComponent as Logo } from "../../assets/4.3 crown.svg";
+import { ReactComponent as Logo } from "../../assets/4.3crown.svg";
 import { auth } from "../../firebase/firebase.utils";
 import "./header.styles.scss";
 // allow use to pass state value using root-Reducer
 // which is the higher state of ower app
 import { connect } from "react-redux";
+import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link to="/" className="logo-container">
       <Logo className="logo" />
@@ -26,15 +28,18 @@ const Header = ({ currentUser }) => (
       ) : (
         <Link to="/signIn">SIGN IN </Link>
       )}
+      <CartIcon />
     </div>
+    {!hidden ? <CartDropdown /> : null}
   </div>
 );
 
 // function allow us to take the currentUser state from
 // user reducer in rootReducer
 // state is the root-reducer wher we put ower all state
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+  currentUser,
+  hidden,
 });
 
 export default connect(mapStateToProps)(Header);
