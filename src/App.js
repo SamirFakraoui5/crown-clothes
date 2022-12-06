@@ -1,6 +1,6 @@
 import React from "react";
 import { HomePage } from "./pages/homepage/homepage.component.jsx";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import ShopPage from "./pages/shop/shop.component.jsx";
 import Header from "./components/header/header.component.jsx";
 import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component.jsx";
@@ -9,8 +9,6 @@ import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/action.user";
 
 class App extends React.Component {
-
-  
   // the base mane concept is to tell our app that
   // we are getting auth by googel
   // function allow us to close
@@ -59,12 +57,22 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route path="/signIn" component={SignInAndSignUp} />
+          <Route
+            exact
+            path="/signIn"
+            render={() =>
+              this.props.currentUser ? <Redirect to="/" /> : <SignInAndSignUp />
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
+
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser
+})
 
 const mapDispatchToProps = (dispatch) => ({
   // here we are setting our action
@@ -75,4 +83,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 // wher passing null because we don't need any props
 // from owe reducer
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
