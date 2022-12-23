@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/action.user";
 
 class App extends React.Component {
+
+
   // the base mane concept is to tell our app that
   // we are getting auth by googel
   // function allow us to close
@@ -18,7 +20,7 @@ class App extends React.Component {
     const { setCurrentUser } = this.props;
 
     // open subscription keep tracking the state of our user auth
-    // if any think change in our app the auth kibrary
+    // if any think change in our app the auth library
     // send the state object to the app to know if it signed in or
     // signed out or anythink
 
@@ -48,6 +50,7 @@ class App extends React.Component {
     // time the component unMount from the dom
     // unMount mean the app get closed
     this.unsubscribeFromAuth();
+
   }
 
   render() {

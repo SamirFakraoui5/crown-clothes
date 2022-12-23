@@ -18,11 +18,13 @@ const firebaseConfig = {
 
 // get the user auth and store it inside of our dadabase
 export const createUserProfileDocument = async (userAuth, additionalData) => {
-  if (!userAuth) return;
-
+  if (!userAuth) return; // if the userAuth not null because we need to get the user object from the auth librery
+ 
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapShot = await userRef.get();
-   
+  
+  console.log(snapShot)
+
   if(!snapShot.exists){
     const { displayName, email } = userAuth;
     const createdAT = new Date(); // new javaScript object that 
