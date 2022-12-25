@@ -7,10 +7,10 @@ import SignInAndSignUp from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.com
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { connect } from "react-redux";
 import { setCurrentUser } from "./redux/user/action.user";
+import { selectCurrentUser } from "./redux/user/user.selector.js";
+import { createStructuredSelector } from "reselect";
 
 class App extends React.Component {
-
-
   // the base mane concept is to tell our app that
   // we are getting auth by googel
   // function allow us to close
@@ -50,7 +50,6 @@ class App extends React.Component {
     // time the component unMount from the dom
     // unMount mean the app get closed
     this.unsubscribeFromAuth();
-
   }
 
   render() {
@@ -73,9 +72,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
-})
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
 
 const mapDispatchToProps = (dispatch) => ({
   // here we are setting our action

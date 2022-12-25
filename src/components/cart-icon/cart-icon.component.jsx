@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { taggelCartHidden } from "../../redux/cart/cart.action";
 import {selectCartItmesCount} from '../../redux/cart/cart.selector'
 import "./cart-icon.styles.scss";
+import { createStructuredSelector } from "reselect";
 
 const CartIcon = ({ taggelCartHidden, itemCount }) => (
   <div className="cart-icon" onClick={taggelCartHidden}>
@@ -12,8 +13,8 @@ const CartIcon = ({ taggelCartHidden, itemCount }) => (
   </div>
 );
 
-const mapStateToProps = state => ({
-  itemCount: selectCartItmesCount(state)
+const mapStateToProps = createStructuredSelector({
+  itemCount: selectCartItmesCount
 });
 
 //  selectore in redux is creating a new value based of ower state 
