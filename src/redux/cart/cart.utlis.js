@@ -6,7 +6,7 @@ export const addItemToCart = (cartItems, cartitemToAdd) => {
     (cartItem) => cartItem.id === cartitemToAdd.id
   );
 
-  // if the item is existe the we reture the item and incresse the quantity
+  // if the item is existe then we reture the item and incresse the quantity
   if (existingItem) {
     return cartItems.map((cartItem) =>
       cartItem.id === cartitemToAdd.id

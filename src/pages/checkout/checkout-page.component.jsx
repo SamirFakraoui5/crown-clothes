@@ -9,7 +9,7 @@ import {
 import { createStructuredSelector } from "reselect";
 
 import "./checkout-page.styles.scss";
-import ChekoutItem from "../../components/checkout-item/checkout-item.component";
+import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 
 const CheckOutPage = ({ cartItmes, total }) => (
   <div className="checkout-page">
@@ -32,7 +32,7 @@ const CheckOutPage = ({ cartItmes, total }) => (
     </div>
     {
     cartItmes.map((cartItem) => (
-      <ChekoutItem key={cartItem.id}  cartItem ={cartItem}/>
+      <CheckoutItem key={cartItem.id}  cartItem ={cartItem}/>
      ))
     }
 
