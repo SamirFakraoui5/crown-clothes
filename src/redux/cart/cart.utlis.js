@@ -17,3 +17,37 @@ export const addItemToCart = (cartItems, cartitemToAdd) => {
   // if it's not existe the we returne the cartItem with quantity proprety 1
   return [...cartItems, { ...cartitemToAdd, quantity: 1 }];
 };
+
+export const addQuantity = (cartItems, QuantityItem) => {
+  const existingItem = cartItems.find(
+    (cartItem) => cartItem.id === QuantityItem.id
+  );
+
+  // if the item is existe then we reture the item and incresse the quantity
+  if (existingItem) {
+    return cartItems.map((cartItem) =>
+      cartItem.id === QuantityItem.id
+        ? { ...cartItem, quantity: (cartItem.quantity += 1) }
+        : cartItem
+    );
+  }
+  // if it's not existe the we returne the cartItem with quantity proprety 1
+  return [...cartItems];
+};
+
+export const removeQuantity = (cartItems, QuantityItem) => {
+  const existingItem = cartItems.find(
+    (cartItem) => cartItem.id === QuantityItem.id
+  );
+
+  // if the item is existe then we reture the item and incresse the quantity
+  if (existingItem) {
+    return cartItems.map((cartItem) =>
+      cartItem.id === QuantityItem.id && cartItem.quantity > 1
+        ? { ...cartItem, quantity: (cartItem.quantity -= 1) }
+        : cartItem
+    );
+  }
+  // if it's not existe the we returne the cartItem with quantity proprety 1
+  return [...cartItems];
+};

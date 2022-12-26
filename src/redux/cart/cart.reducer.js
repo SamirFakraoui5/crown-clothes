@@ -1,5 +1,5 @@
 import cartActionType from "./cart.types";
-import { addItemToCart } from "./cart.utlis";
+import { addItemToCart, addQuantity, removeQuantity } from "./cart.utlis";
 
 const INTIAL_STATE = {
   hidden: true,
@@ -25,6 +25,16 @@ const cartReducer = (state = INTIAL_STATE, action) => {
           (cartItem) => cartItem.id !== action.payload.id // we are saying that when the cartItem id defferent from the id that comming from the action
           // the we going to keep it othewys we are going to filter it and return an new array
         ),
+      };
+    case cartActionType.ADD_QUANTITY:
+      return {
+        ...state,
+        cartItmes: addQuantity(state.cartItmes, action.payload),
+      };
+    case cartActionType.REMOVE_QUANTITY:
+      return {
+        ...state,
+        cartItmes: removeQuantity(state.cartItmes, action.payload),
       };
     default:
       return state;

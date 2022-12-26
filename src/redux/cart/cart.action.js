@@ -13,3 +13,13 @@ export const ClearItemFromCart = item =>({
   type:cartActionType.CLEAR_ITEM_FROM_CAR,
   payload:item
 })
+
+export const addQuantityToItem = item =>({
+  type:cartActionType.ADD_QUANTITY,
+  payload:item
+})
+
+export const RemoveQuantityFromItem = item =>({
+  type:cartActionType.REMOVE_QUANTITY,
+  payload:item
+})
