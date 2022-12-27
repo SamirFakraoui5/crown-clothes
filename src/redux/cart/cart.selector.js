@@ -37,5 +37,3 @@ export const selectCartTolal = createSelector([selectCartItmes], (cartItmes) =>
     0
   )
 );
-
- 
